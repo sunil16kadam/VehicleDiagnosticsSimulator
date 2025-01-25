@@ -1,0 +1,207 @@
+********************************************************************************
+Automotive Diagnostic System Simulator
+********************************************************************************
+
+    Develop a simple Automotive Diagnostic System Simulator 
+    that mimics basic functionalities of a real-world diagnostic tool. 
+    The system should allow users to check vehicle parameters, perform basic diagnostics, 
+    and simulate resolving minor issues.
+
+    This project allows engineers to apply the following concepts:
+    Object-Oriented Design through inheritance and polymorphism.
+    Practical usage of function and operator overloading.
+    Realistic implementation of exception handling.
+    Exposure to file handling for diagnostics.
+
+
+Functional Requirements:
+************************
+
+Vehicle Class Hierarchy (Inheritance & Polymorphism):
+    Create a base class Vehicle with common attributes like make, model, and year.
+    Derive specific classes like Car, Truck, and Motorcycle with additional attributes, 
+    e.g., Car may have airbags and isElectric.
+
+Function Overloading:
+    Implement overloaded functions in the Vehicle class for:
+    checkParameter(int id) to query specific sensors (e.g., engine temperature, tire pressure).
+    checkParameter(std::string name) for named diagnostics (e.g., "engine", "brakes").
+
+Operator Overloading:
+    Overload the + operator to simulate adding new diagnostic data 
+    (e.g., combining sensor readings from two vehicles).
+    Overload the << operator for printing vehicle diagnostic summaries.
+
+Exception Handling:
+    Handle cases like invalid sensor IDs, unsupported vehicle types, or 
+    communication failures between components using custom exceptions 
+    (InvalidSensorException, UnsupportedVehicleException).
+
+Polymorphism:
+    Use a virtual function performDiagnostics() in the Vehicle base class 
+    to demonstrate polymorphic behavior for diagnostics across different types of vehicles.
+
+Diagnostic History:
+    Store diagnostic results for each vehicle in a file (using file handling) for future reference.
+
+Example Workflow:
+************************
+
+    Create a Car object for "Honda Civic" and a Truck object for "Volvo FH".
+    Run diagnostics using polymorphic behavior and display results (e.g., "Engine: OK", "Tires: Low Pressure").
+    Handle exceptions for unsupported operations or invalid inputs.
+    Save diagnostic history in a file.
+
+Use cases:
+**********
+
+    - Adding a new vehicle**: DiagnosticsManager::addVehicle()
+    - Performing diagnostics**: DiagnosticsManager::performDiagnostics()
+    - Saving diagnostics to file**: DiagnosticsManager::saveDiagnosticsToFile()
+    - Viewing diagnostic history**: DiagnosticsManager::viewDiagnosticsHistory()
+
+
+Use Case 1: Add Vehicle to System:
+**********************************
+
+    Description:
+        The user adds a new vehicle (e.g., car, truck, or motorcycle) to the system.
+
+    Actors:
+        Primary: Engineer/User
+        Secondary: System Database
+    
+    Preconditions:
+        The system is initialized and ready to accept input.
+        The vehicle type, make, model, and year are known.
+
+    Steps:
+        The user inputs the vehicle details.
+        The system creates an object of the appropriate vehicle type (Car, Truck, or Motorcycle).
+        The system stores the vehicle in its database (or a collection).
+
+    Postconditions:
+        The vehicle is successfully added to the system and ready for diagnostics.
+
+    Exceptions:
+        Invalid vehicle type entered.
+
+Use Case 2: User perform Diagnostics on a selected vehicle:
+***********************************************************
+
+Description:
+    The user performs diagnostics on a selected vehicle.
+
+Actors:
+    Primary: Engineer/User
+    Secondary: Vehicle
+
+Preconditions:
+    At least one vehicle exists in the system.
+    The selected vehicle is in a state to accept diagnostic commands.
+
+Steps:
+    The user selects a vehicle from the system.
+    The system invokes the performDiagnostics() method of the selected vehicle object.
+    The system displays diagnostic results (e.g., engine status, tire pressure, battery level).
+
+Postconditions:
+    Diagnostics results are displayed to the user.
+    Results are optionally saved to a file.
+
+Exceptions:
+    Vehicle not found in the system.
+    Diagnostic functionality not supported for the selected vehicle.
+
+Use Case 3: Check Vehicle Parameters:
+*************************************
+
+Description:
+    The user queries specific parameters of a vehicle (e.g., engine temperature, tire pressure).
+
+Actors:
+    Primary: Engineer/User
+    Secondary: Vehicle
+Preconditions:
+    At least one vehicle exists in the system.
+    Valid parameter ID or name is provided.
+
+Steps:
+    The user selects a vehicle and enters a parameter query (checkParameter(int id) or checkParameter(std::string name)).
+    The system retrieves the requested parameter from the vehicle.
+    The system displays the parameter value to the user.
+
+Postconditions:
+    Parameter value is displayed.
+
+Exceptions:
+    Invalid parameter ID or name.
+    Parameter unavailable for the selected vehicle.
+
+Use Case 4: Save Diagnostic History/results to file:
+****************************************************
+
+Description:
+    The system saves diagnostic results to a file for future reference.
+
+Actors:
+    Primary: System
+
+Preconditions:
+    Diagnostics have been performed on at least one vehicle.
+
+Steps:
+    The system collects the latest diagnostic results.
+    The system writes the results to a file, organized by vehicle ID or name.
+
+Postconditions:
+    Diagnostic results are saved in a file with a timestamp.
+
+Exceptions:
+    File writing error (e.g., insufficient disk space or write permissions).
+
+Use Case 5: View Diagnostic History:
+************************************
+
+Description:
+    The user views the saved diagnostic history of a specific vehicle.
+
+Actors:
+    Primary: Engineer/User
+    Secondary: System
+
+Preconditions:
+    The diagnostic history file exists for the vehicle.
+
+Steps:
+    The user selects a vehicle and requests the diagnostic history.
+    The system reads the history file associated with the selected vehicle.
+    The system displays the history to the user.
+
+Postconditions:
+    Diagnostic history is shown to the user.
+
+Exceptions:
+    No history available for the selected vehicle.
+    File reading error.
+
+Use Case 6: Handle Exceptions:
+******************************
+
+Description:
+    The system handles errors gracefully and provides meaningful feedback to the user.
+
+Actors:
+    Primary: System
+    
+Preconditions:
+    An error scenario occurs during any operation.
+
+Steps:
+    The system detects an error (e.g., invalid input, unsupported vehicle type).
+    The system throws an appropriate exception (InvalidSensorException, UnsupportedVehicleException).
+    The system logs the error and displays an error message to the user.
+
+Postconditions:
+    The user is informed about the issue and can take corrective actions.
+

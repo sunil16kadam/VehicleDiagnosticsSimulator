@@ -1,0 +1,101 @@
+********************************************************************************
+High-Level Design for Vehicle  Diagnostic System Simulator
+********************************************************************************
+
+1. Introduction:
+****************
+
+    The Vehicle Diagnostics System is designed to manage and perform diagnostics 
+    on different types of vehicles, such as Cars, Trucks, and Motorcycles. 
+    It provides functionalities to add vehicles, perform diagnostics, and save/view diagnostic reports.
+
+2. Architecture Overview:
+*************************
+
+    The system follows an object-oriented design using C++ principles such as 
+    inheritance, polymorphism, and encapsulation.
+    The architecture consists of the following main components:
+
+        - Core Classes: `Vehicle` (Abstract base class)
+        - Derived classes: `Car`, `Truck`, `Motorcycle`
+        - Management Classes:**
+        -   `DiagnosticsManager` (Handles diagnostics operations)
+        - Client Code:
+        - `main.cpp` (Demonstrates system usage)
+
+3. Class Diagram Overview:
+**************************
+
++---------------------+
+|      Vehicle        |
++---------------------+
+| - make: string      |
+| - model: string     |
+| - year: int         |
++---------------------+
+| + display()         |
+| + performDiagnostics()|
+| + checkParameter()  |
++---------------------+
+          ^
+          |
++---------------------+   +---------------------+   +---------------------+
+|        Car          |   |        Truck        |   |     Motorcycle      |
++---------------------+   +---------------------+   +---------------------+
+| - airbags: int      |   | - cargoCapacity:double|   | - isSportBike: bool |
++---------------------+   +---------------------+   +---------------------+
+| + display()         |   | + display()          |   | + display()          |
++---------------------+   +---------------------+   +---------------------+
+
++-------------------------------+
+|      DiagnosticsManager        |
++-------------------------------+
+| - vehicles: vector<Vehicle*>   |
++-------------------------------+
+| + addVehicle()                 |
+| + performDiagnostics()         |
+| + saveDiagnosticsToFile()       |
+| + viewDiagnosticsHistory()      |
++-------------------------------+
+
+
+4. Component Descriptions:
+****************************
+
+    a. Vehicle (Abstract Base Class)
+        - Defines common attributes such as `make`, `model`, and `year`.
+        - Declares pure virtual functions to enforce implementation in derived classes.
+
+    b. Car, Truck, Motorcycle (Derived Classes)
+        - Provide specific implementations of diagnostic methods.
+        - Each subclass has unique attributes like airbags, cargo capacity, or sport bike type.
+
+    c. DiagnosticsManager
+        - Manages a collection of vehicles.
+        - Handles operations such as adding vehicles, performing diagnostics, saving and retrieving reports.
+
+    d. Client (main.cpp)
+        - Demonstrates the flow of the application by creating objects, invoking methods, and displaying outputs.
+
+5. Data Flow Diagram:
+*********************
+
+[ User ] --> [ DiagnosticsManager ] --> [ Vehicles ]
+                             |                |
+                             |-- Save/Load --> Files
+```
+
+6. Use cases:
+*************
+
+    - Adding a new vehicle**: DiagnosticsManager::addVehicle()
+    - Performing diagnostics**: DiagnosticsManager::performDiagnostics()
+    - Saving diagnostics to file**: DiagnosticsManager::saveDiagnosticsToFile()
+    - Viewing diagnostic history**: DiagnosticsManager::viewDiagnosticsHistory()
+
+## 7. Error Handling
+- Input validation (vehicle index bounds, file operations).
+- Handling null pointers and memory safety using smart pointers.
+
+## 8. Conclusion
+The design follows a modular and extensible approach, making it easy to add new vehicle types and diagnostic features in the future.
